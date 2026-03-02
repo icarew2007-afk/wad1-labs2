@@ -8,9 +8,9 @@ const about = {
     logger.info("About page loading!");
 
     const employees = getAppInfo.getAppInfo();
-    const employee = employees[0];   
+      
 
-    response.render("about", { employee });
+    response.render("about", { employee: employees });
   },
 };
 
