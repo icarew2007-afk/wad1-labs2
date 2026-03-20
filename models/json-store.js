@@ -52,20 +52,18 @@ class JsonStore {
     await this.db.write();
   }
 
-  async editCollection(collection, id, obj) {
-    let index = this.db.data[collection].findIndex((c) => c.id === id);
-    if (index > -1) {
-      this.db.data[collection].splice(index, 1, obj);
+  async editItem(collection, playlistId, arr, songId, updatedSong) {
+    const playlists = this.db.data[collection];
+    const playlist = playlists.find((c) => c.id === playlistId);
+    if (playlist && playlist[arr]) {
+      const songIndex = playlist[arr].findIndex((s) => s.id === songId);
+      if (songIndex !== -1) {
+        playlist[arr][songIndex] = updatedSong;
+        await this.db.write();
+      }
     }
-    await this.db.write();
   }
 
-  async editItem(collection, id, itemId, arr, obj) {
-    const data = this.db.data[collection].filter((c) => c.id === id);
-    let index = data[0][arr].findIndex((i) => i.id === itemId);
-    data[0][arr].splice(index, 1, obj);
-    await this.db.write();
-  }
 }
 
 export default JsonStore;

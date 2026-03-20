@@ -29,6 +29,9 @@ removePlaylist(id) {
     this.store.removeCollection(this.collection, playlist);
 },
 
+    async editSong(id, songId, updatedSong) {
+        await this.store.editItem(this.collection, id, this.array, songId, updatedSong);
+    },
 
 
 
