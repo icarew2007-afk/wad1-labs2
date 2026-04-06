@@ -32,6 +32,11 @@ removePlaylist(id) {
     async editSong(id, songId, updatedSong) {
         await this.store.editItem(this.collection, id, this.array, songId, updatedSong);
     },
+searchPlaylist(search) {
+    return this.store.findBy(
+      this.collection,
+      (playlist => playlist.title.toLowerCase().includes(search.toLowerCase())))
+}
 
 
 
