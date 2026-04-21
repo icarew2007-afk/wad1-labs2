@@ -2,6 +2,13 @@
 
 import logger from '../utils/logger.js';
 import JsonStore from './json-store.js';
+import { v2 as cloudinary } from 'cloudinary';
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const userStore = {
 
@@ -20,8 +27,17 @@ const userStore = {
     return this.store.findOneBy(this.collection, (user => user.email === email));
   },
   
-  addUser(user) {
-    this.store.addCollection(this.collection, user);
+  async addUser(user, file, response) {
+    try {
+      if (file) {
+        user.picture = await this.store.addToCloudinary(file);
+      }
+      this.store.addCollection(this.collection, user);
+      response();
+    } catch (error) {
+      logger.error("Error adding user:", error);
+      response(error);
+    }
   },
 
 };

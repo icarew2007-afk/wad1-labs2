@@ -39,13 +39,19 @@ const accounts = {
   },
   
  //register function to render the registration page for adding a new user
-  register(request, response) {
-  const user = request.body;
-  user.id = uuidv4();
-  userStore.addUser(user);
-  logger.info('registering' + user.email);
-  response.cookie('playlist', user.email);
-  response.redirect('/start');
+  async register(request, response) {
+    const user = request.body;
+    user.id = uuidv4();
+    userStore.addUser(user, request.file, (err) => {
+      if (err) {
+        logger.error('error registering ' + user.email + ' - ' + err);
+        response.redirect('/signup');
+      } else {
+        logger.info('registering ' + user.email);
+        response.cookie('playlist', user.email);
+        response.redirect('/start');
+      }
+    });
   },
   
   //authenticate function to check user credentials and either render the login page again or the start page.
@@ -65,6 +71,7 @@ const accounts = {
     const userEmail = request.cookies.playlist;
     return userStore.getUserByEmail(userEmail);
   }
+
 }
 
 export default accounts;

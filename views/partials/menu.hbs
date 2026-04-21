@@ -1,7 +1,17 @@
 <nav class="ui stackable menu">
   <header class="ui header item"> <a href="/start"> Playlist App </a></header>
   <div class="right menu">
-    <span class="name">{{fullname}}</span>
+    <span class="name">
+      {{fullname}}
+      {{#if profilePicUrl}}
+        <img src="{{profilePicUrl}}" alt="Profile Picture" class="ui avatar image" style="margin-left: 10px; vertical-align: middle;">
+      {{/if}}
+    </span>
+
+    <script>
+      const el = document.querySelector("#{{id}}");
+      if (el) el.classList.add("active");
+    </script>
     <a id="dashboard" class="item" href="/dashboard"> Dashboard </a>
     <a id="about" class="item" href="/about"> About  </a>
     <a id="stats" class="item" href="/stats"> Statistics</a>

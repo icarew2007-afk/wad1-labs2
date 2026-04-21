@@ -1,6 +1,10 @@
 {{> welcomemenu id="signup"}}
 
-<form class="ui stacked segment form" action="/register" method="POST">
+<form class="ui stacked segment form" action="/register" method="POST" enctype="multipart/form-data">
+  <div class="field">
+    <label for="profilePic">Profile Picture</label>
+    <input placeholder="Image" type="file" name="picture" required>
+  </div>
   <h3 class="ui header">Register</h3>
   <div class="two fields">
     <div class="field">
@@ -20,5 +24,6 @@
     <label for="password">Password</label>
     <input type="password" name="password" required>
   </div>
+  
   <button class="ui blue submit button">Submit</button>
 </form>
