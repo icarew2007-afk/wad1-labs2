@@ -40,7 +40,7 @@ const dashboard = {
       const viewData = {
         title: "Playlist App Dashboard",
         fullname: loggedInUser.firstName + ' ' + loggedInUser.lastName,
-        profilePicUrl: loggedInUser.profilePicUrl,
+        picture: loggedInUser.picture,
         playlists: sortField ? sorted : playlists,
         search: searchTerm,
         titleSelected: request.query.sort === "title",
@@ -61,7 +61,7 @@ const dashboard = {
 
 
   
-    addPlaylist(request, response) {
+      addPlaylist(request, response) {
     const loggedInUser = accounts.getCurrentUser(request);
     const timestamp = new Date();
 	
@@ -78,6 +78,7 @@ const dashboard = {
         response.redirect("/dashboard");
     });
   },
+
 
 
 

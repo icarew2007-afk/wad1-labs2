@@ -37,22 +37,22 @@ const accounts = {
     };
     response.render('signup', viewData);
   },
+
+     register(request, response) {
+  const user = request.body;
+  user.id = uuidv4();
+
+  logger.info('registering ' + user.email);
+  response.cookie('playlist', user.email);
+
+  userStore.addUser(user, request.files.picture, function(err){
+    if (err) {
+      return response.status(500).send("Error registering user");
+    }
+    response.redirect('/start');
+  });
+},
   
- //register function to render the registration page for adding a new user
-  async register(request, response) {
-    const user = request.body;
-    user.id = uuidv4();
-    userStore.addUser(user, request.file, (err) => {
-      if (err) {
-        logger.error('error registering ' + user.email + ' - ' + err);
-        response.redirect('/signup');
-      } else {
-        logger.info('registering ' + user.email);
-        response.cookie('playlist', user.email);
-        response.redirect('/start');
-      }
-    });
-  },
   
   //authenticate function to check user credentials and either render the login page again or the start page.
   authenticate(request, response) {

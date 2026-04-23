@@ -28,17 +28,15 @@ const userStore = {
   },
   
   async addUser(user, file, response) {
-    try {
-      if (file) {
+      try {
         user.picture = await this.store.addToCloudinary(file);
+        this.store.addCollection(this.collection, user);
+        response();
+      } catch (error) {
+        logger.error("Error processing picture:", error);
+        
       }
-      this.store.addCollection(this.collection, user);
-      response();
-    } catch (error) {
-      logger.error("Error adding user:", error);
-      response(error);
-    }
-  },
+    },
 
 };
 
